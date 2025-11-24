@@ -1,37 +1,30 @@
-
-import environ
 import os
-from datetime import timedelta 
+import environ
+from datetime import timedelta
 from pathlib import Path
 
+"""
+Environment variables setup
+"""
 
-''''
-hear is the code use for the environment variables
-
-'''
-
-
-env = environ.Env()
-environ.Env.read_env()
-
-'''
-code to store the env keys 
-'''
-
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load .env file FROM BASE_DIR
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+"""
+Now you can use env variables
+"""
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tqqw##%8xt_p9oeg^jfm(5mblfuhc6s$5o7fixp(6t=#s_7wi6'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=True)
+
+
 
 ALLOWED_HOSTS = []
 
@@ -56,8 +49,41 @@ EXTRA_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
     'django_filters',
-    'configuure', 
+    'configure', 
 ]
+
+INSTALLED_APPS += EXTRA_APPS
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+AUTH_USER_MODEL = 'configure.User'
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True
+}
+
+
+#Email Verification Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,10 +120,11 @@ WSGI_APPLICATION = 'levelio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': env('SQL_ENGINE'),
+        'NAME': env('SQL_DATABASE'),
     }
 }
+
 
 
 # Password validation
