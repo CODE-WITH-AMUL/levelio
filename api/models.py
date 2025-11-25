@@ -20,6 +20,7 @@ class SocialAccount(models.Model):
         unique_together = ('provider', 'provider_account_uid')
 
 
+
 class EmailVerificationToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='email_verifications')
     email_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

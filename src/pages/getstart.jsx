@@ -1,160 +1,201 @@
-import { useState } from 'react';
-import { Dialog } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+// GetStarted.jsx — Updated Version
+import React, { useState } from "react";
 
+export default function GetStarted() {
+  const [dark, setDark] = useState(false);
 
+  const features = [
+    { icon: "📸", title: "Snap & Upload", desc: "Take a photo or upload your Written Answer Sheet" },
+    { icon: "🤖", title: "AI Checking", desc: "AI instantly reads all answers and detects mistakes" },
+    { icon: "📊", title: "Instant Result", desc: "Get detailed marks, mistakes & improvement tips" }
+  ];
 
-const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
-];
-
-function GetPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const stats = [
+    { number: "5K+", label: "Answer Sheets Checked" },
+    { number: "98.5%", label: "Accuracy Rate" },
+    { number: "24/7", label: "AI Service" },
+    { number: "Free", label: "For Students" }
+  ];
 
   return (
-    <div className="bg-gray-900 min-h-screen relative overflow-hidden">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
-            </a>
-          </div>
+    <div className={dark ? "app dark" : "app"}>
 
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200"
+      {/* HEADER */}
+      <header className="header">
+        <div className="logo">levelio</div>
+
+        {/* UPDATED BUTTON → Goes to login page */}
+        <button 
+          className="get-started-btn"
+          onClick={() => (window.location.href = "/login")}
+        >
+          Get Started →
+        </button>
+      </header>
+
+      {/* HERO SECTION */}
+      <section className="hero">
+        <div className="hero-content">
+          <h1 className="hero-title">
+            Check Written Answer Sheets in  
+            <span className="highlight"> Seconds</span>
+          </h1>
+
+          <p className="hero-desc">
+            Upload your answer sheet and get instant marks with AI feedback.  
+            Fast, accurate & built for teachers and students.
+          </p>
+
+          <div className="hero-buttons">
+            <button 
+              className="primary-btn"
+              onClick={() => (window.location.href = "/login")}
             >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+              Start Checking Now
+            </button>
+
+            <button className="secondary-btn">
+              Watch Demo
             </button>
           </div>
 
-          <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold text-white">
-                {item.name}
-              </a>
+          <div className="stats">
+            {stats.map((s, i) => (
+              <div key={i} className="stat-item">
+                <div className="stat-number">{s.number}</div>
+                <div className="stat-label">{s.label}</div>
+              </div>
             ))}
           </div>
+        </div>
 
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold text-white">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </nav>
-
-        {/* Mobile menu */}
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-          <div className="fixed inset-0 z-50 bg-black/50" />
-          <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full max-w-sm overflow-y-auto bg-gray-900 p-6 sm:ring-1 sm:ring-gray-100/10">
-            <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                  className="h-8 w-auto"
-                />
-              </a>
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-200"
-              >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-white/10">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-white/5"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
+        {/* PHONE PREVIEW */}
+        <div className="hero-visual">
+          <div className="mockup-phone">
+            <div className="phone-screen">
+              <div className="screen-content">
+                <div className="upload-area">
+                  <div className="upload-icon">📄</div>
+                  <p>Upload Answer Sheet</p>
                 </div>
-                <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-white/5"
-                  >
-                    Log in
-                  </a>
+
+                <div className="processing-bar">
+                  <div className="progress"></div>
+                </div>
+
+                <div className="result-preview">
+                  <div className="score">Marks: 42/50</div>
+                  <div className="correct">Correct Answers: 18</div>
                 </div>
               </div>
             </div>
-          </Dialog.Panel>
-        </Dialog>
-      </header>
-
-      <main className="relative isolate px-6 pt-32 lg:px-8 flex flex-col items-center justify-center text-center">
-        {/* Decorative Waves */}
-        <svg
-          className="absolute left-8 top-16 w-72 h-32 -z-10"
-          viewBox="0 0 288 128"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 64 Q72 32 144 64 Q216 96 288 64"
-            stroke="#60A5FA"
-            strokeWidth="24"
-            opacity="0.8"
-          />
-        </svg>
-        <svg
-          className="absolute left-8 top-40 w-72 h-32 -z-10"
-          viewBox="0 0 288 128"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 64 Q72 96 144 64 Q216 32 288 64"
-            stroke="#60A5FA"
-            strokeWidth="24"
-            opacity="0.8"
-          />
-        </svg>
-
-        <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white z-10 relative">
-          Data to enrich your online business
-        </h1>
-        <p className="mt-6 text-lg sm:text-xl text-gray-400 max-w-xl z-10 relative">
-          Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-          fugiat veniam occaecat.
-        </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-4 z-10 relative">
-          <a
-            href="#"
-            className="rounded-md bg-indigo-500 px-6 py-3 text-lg font-semibold text-white shadow-lg hover:bg-indigo-400"
-          >
-            Get started
-          </a>
-          <a href="#" className="text-lg font-semibold text-white">
-            Learn more <span aria-hidden="true">→</span>
-          </a>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* FEATURES */}
+      <section className="features">
+        <h2 className="section-title">How It Works</h2>
+
+        <div className="features-grid">
+          {features.map((f, i) => (
+            <div key={i} className="feature-card">
+              <div className="feature-icon">{f.icon}</div>
+              <h3 className="feature-title">{f.title}</h3>
+              <p className="feature-desc">{f.desc}</p>
+              <div className="step-number">Step {i + 1}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="cta-section">
+        <div className="cta-content">
+          <h2>Ready to Start?</h2>
+          <p>AI that checks written sheets in seconds.</p>
+          
+          <button 
+            className="cta-btn"
+            onClick={() => (window.location.href = "/login")}
+          >
+            Create Your Account
+          </button>
+
+          <div className="cta-note">🎓 Free for students — No credit card</div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <h3>levelio</h3>
+            <p>AI Answer Sheet Checker</p>
+          </div>
+
+          <div className="footer-links">
+            <div className="footer-column">
+              <h4>Product</h4>
+              <a>Features</a><a>Pricing</a><a>Examples</a>
+            </div>
+
+            <div className="footer-column">
+              <h4>Support</h4>
+              <a>Help Center</a><a>Contact</a><a>FAQ</a>
+            </div>
+
+            <div className="footer-column">
+              <h4>Legal</h4>
+              <a>Privacy</a><a>Terms</a><a>Security</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} levelio — All rights reserved.</p>
+
+          <button className="theme-toggle" onClick={() => setDark(!dark)}>
+            {dark ? "☀️ Light" : "🌙 Dark"}
+          </button>
+        </div>
+      </footer>
+
+      {/* STYLES — (unchanged except minor fixes) */}
+      <style>{`
+        *{margin:0;padding:0;box-sizing:border-box}
+        .app{font-family:'Inter',sans-serif;background:#fff;color:#1a1a1a;transition:.3s}
+        .app.dark{background:#0f172a;color:#f1f5f9}
+
+        .header{display:flex;justify-content:space-between;padding:1.5rem 2rem;backdrop-filter:blur(10px);position:sticky;top:0;z-index:10;border-bottom:1px solid #e2e8f0}
+        .logo{font-weight:bold;font-size:1.6rem;background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .get-started-btn{background:#3b82f6;color:#fff;padding:.7rem 1.4rem;border:none;border-radius:8px;font-weight:600;cursor:pointer}
+
+        .hero{display:grid;grid-template-columns:1fr 1fr;max-width:1200px;margin:auto;padding:4rem 2rem;gap:3rem}
+        .hero-title{font-size:3rem;font-weight:800}
+        .highlight{background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero-desc{color:#64748b;margin:1rem 0 2rem;font-size:1.2rem}
+        .primary-btn,.secondary-btn{padding:1rem 2rem;font-size:1.1rem;border-radius:10px;font-weight:600;cursor:pointer}
+        .primary-btn{background:#3b82f6;color:white;border:none}
+        .secondary-btn{border:2px solid #3b82f6;color:#3b82f6;background:transparent}
+
+        .stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:2rem;gap:1.5rem}
+        .stat-number{font-size:1.5rem;font-weight:700;color:#3b82f6}
+
+        .mockup-phone{width:300px;height:600px;background:#1e293b;border-radius:40px;padding:20px}
+        .phone-screen{background:white;border-radius:30px;height:100%;padding:2rem}
+        .upload-area{border:2px dashed #cbd5e1;padding:2rem;border-radius:15px;margin-bottom:2rem}
+        .processing-bar{background:#e2e8f0;height:8px;border-radius:10px;margin:1.5rem 0}
+        .progress{background:#10b981;height:100%;width:70%;animation:processing 2s infinite}
+
+        .features{padding:5rem 2rem;background:#f8fafc}
+        .feature-card{background:white;padding:2rem;border-radius:20px;border:1px solid #e2e8f0;position:relative}
+
+        .cta-section{padding:5rem 2rem;text-align:center;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white}
+        .cta-btn{background:white;color:#3b82f6;padding:1.2rem 3rem;border-radius:12px;font-size:1.2rem;font-weight:700;border:none}
+
+        .footer{background:#1e293b;color:white;padding:3rem 2rem}
+      `}</style>
     </div>
   );
 }
-
-export default GetPage;

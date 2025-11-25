@@ -73,6 +73,7 @@ SIMPLE_JWT = {
 
 
 #Email Verification Settings
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env('EMAIL_PORT')
@@ -82,6 +83,14 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 
@@ -94,6 +103,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+MIDDLEWARE_CORS = [
+    'corsheaders.middleware.CorsMiddleware',
+    # ...
+]
+MIDDLEWARE += MIDDLEWARE_CORS
 
 ROOT_URLCONF = 'levelio.urls'
 

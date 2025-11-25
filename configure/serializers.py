@@ -1,8 +1,12 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from configure.models import User   # FIXED
+from configure.models import User   
 
 class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        max_length = 30,
+        write_only = True
+    )
     password = serializers.CharField(
         write_only=True,
         required=True,
