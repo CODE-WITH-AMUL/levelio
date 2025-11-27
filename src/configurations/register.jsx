@@ -185,7 +185,18 @@ const Register = () => {
           </button>
         </form>
 
-          
+        
+
+        <div className="demo-section">
+          <button
+            type="button"
+            className="demo-btn"
+            onClick={fillDemoData}
+            disabled={loading}
+          >
+            Fill Demo Data
+          </button>
+        </div>
 
         <div className="auth-links">
           <p>

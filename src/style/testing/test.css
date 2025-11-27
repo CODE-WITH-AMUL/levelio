@@ -1,0 +1,20 @@
+
+body{
+  .nav-links a:hover {
+    background: rgba(13, 110, 253, 0.08);
+    color: #0D6EFD !important;
+    transform: translateY(-1px);
+  }
+  .nav-links a:hover span {
+    transform: scale(1.1);
+  }
+  .dropdown-toggle-custom:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(176, 181, 189, 0.4) !important;
+  }
+  .dropdown-item:hover {
+    background: linear-gradient(135deg, #edeeef 0%, #d4d4d4 100%) !important;
+    color: white !important;
+    transform: translateX(4px);
+  }
+}
