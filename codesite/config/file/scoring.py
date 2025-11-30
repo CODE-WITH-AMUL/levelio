@@ -1,19 +1,32 @@
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# Load tokenizer
-tokenizer = AutoTokenizer.from_pretrained("openlm-research/open_llama_3b")
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
-# Load model
-model = AutoModelForCausalLM.from_pretrained(
-    "openlm-research/open_llama_3b",
-    torch_dtype=torch.float16,  # <--- requires torch imported
-    device_map="auto"
-)
+# -------------------------
+# 1️⃣ Set your Hugging Face token here
 
-# Test prompt
-prompt = "Q: What is the largest animal?\nA:"
-inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
-outputs = model.generate(inputs.input_ids, max_new_tokens=50, do_sample=True)
-print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+# -------------------------
+# 2️⃣ Choose a small free model for testing
+# -------------------------
+# For testing on low-end laptops, use 1B or 3B models
+MODEL_NAME = "EleutherAI/gpt-neo-1.3B"  # smaller model for testing
+# MODEL_NAME = "google/gemma-3-1b"      # alternative Gemma 1B model
+
+# -------------------------
+# 3️⃣ Load tokenizer and model
+# -------------------------
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, token=API_TOKEN)
+model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, token=API_TOKEN)
+
+# Create a text generation pipeline
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
+
+# -------------------------
+# 4️⃣ Prompt for testing
+# -------------------------
+prompt = "Explain gravity in simple words."
+
+# Generate text
+output = generator(prompt, max_new_tokens=100, do_sample=True)
+print("\n=== Generated Output ===\n")
+print(output[0]['generated_text'])
