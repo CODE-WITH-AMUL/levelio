@@ -22,18 +22,18 @@ const Login = () => {
 
     // Fixed response handling
     if (result.message && result.user) {
-      setMessage(`✅ ${result.message} Redirecting...`);
+      setMessage(` ${result.message} Redirecting...`);
       // Store user data
       localStorage.setItem('user', JSON.stringify(result.user));
       
       // Redirect to dashboard
       setTimeout(() => navigate('/home'), 2000);
     } else if (result.error) {
-      setMessage(`❌ ${result.error}`);
+      setMessage(` ${result.error}`);
     } else if (result.non_field_errors) {
-      setMessage(`❌ ${result.non_field_errors.join(', ')}`);
+      setMessage(` ${result.non_field_errors.join(', ')}`);
     } else {
-      setMessage("❌ Login failed");
+      setMessage(" Login failed");
     }
     
     setLoading(false);
@@ -103,7 +103,7 @@ const Login = () => {
             onClick={fillDemoCredentials}
             disabled={loading}
           >
-            🚀 Fill Demo Credentials
+            Fill Demo Credentials
           </button>
         </div>
 

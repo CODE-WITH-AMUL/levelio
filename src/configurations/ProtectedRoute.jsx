@@ -1,21 +1,11 @@
-// src/ProtectedRoute.jsx
+import { Navigate } from "react-router-dom";
 
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from './AuthContext'; // Import your auth hook
+export default function ProtectedRoute({ children }) {
+  const token = localStorage.getItem("access"); // JWT token
 
-const ProtectedRoute = () => {
-  const { isAuthenticated } = useAuth();
-  
-  // If the user is NOT authenticated, redirect them to the login page.
-  if (!isAuthenticated) {
-    // The 'replace' prop is crucial to stop users from using the browser's back button 
-    // to access the protected page after being redirected.
-    return <Navigate to="/login" replace />; 
+  if (!token) {
+    return <Navigate to="/login" />;
   }
-  
-  // If the user IS authenticated, render the child route components.
-  return <Outlet />;
-};
 
-export default ProtectedRoute;
+  return children;
+}

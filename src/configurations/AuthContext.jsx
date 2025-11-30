@@ -1,53 +1,33 @@
-// src/AuthContext.jsx
+import { createContext, useContext, useState } from "react";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+const AuthContext = createContext();
 
-const AuthContext = createContext(null);
+// AuthProvider wraps your app
+export function AuthProvider({ children }) {
+  const AUTH_CHECK_API = process.env.REACT_APP_AUTH_CHECK_API_URL;
+  const LOGIN_API = process.env.REACT_APP_LOGIN_API_URL;
 
-// Custom hook to use the Auth context easily
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+  const [isAuth, setIsAuth] = useState(
+    !!localStorage.getItem("access") // true if JWT exists
+  );
 
-// Provider component
-export const AuthProvider = ({ children }) => {
-  // Try to load the user from local storage on mount
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-
-  // Function to handle successful login
-  // This is what your Login.jsx component will call
-  const login = (userData) => {
-    // 1. Save the user data to local storage (for persistence across page reloads)
-    localStorage.setItem('user', JSON.stringify(userData));
-    // 2. Set the user state
-    setUser(userData);
-  };
-
-  // Function to handle logout
-  const logout = () => {
-    // 1. Clear the token/user data
-    localStorage.removeItem('user');
-    // 2. Clear the user state
-    setUser(null);
-  };
-
-  const value = {
-    user,
-    login,
-    logout,
-    // The core check for the ProtectedRoute
-    isAuthenticated: !!user, 
-  };
-
-  // Optional: You can skip this loading state for simplicity 
-  // since we're using a synchronous check in the useState initializer.
-  // We'll keep it simple and just return the provider immediately.
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider
+      value={{
+        isAuth,
+        setIsAuth,
+        AUTH_CHECK_API,
+        LOGIN_API
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-};
+}
+
+// Hook to use auth context in components
+export function useAuth() {
+  return useContext(AuthContext);
+}
+
+export default AuthContext;

@@ -7,6 +7,7 @@ from .serializers import RegisterSerializer, LoginSerializer
 from api.models import EmailVerificationToken
 from api.utils import send_email_verification
 import logging
+from rest_framework.permissions import IsAuthenticated
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +56,6 @@ class RegisterView(APIView):
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
-
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         

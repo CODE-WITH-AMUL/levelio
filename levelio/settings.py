@@ -47,6 +47,7 @@ EXTRA_APPS = [
     'core',
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
     'drf_yasg',
     'django_filters',
     'configure', 
@@ -58,6 +59,7 @@ INSTALLED_APPS += EXTRA_APPS
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 
